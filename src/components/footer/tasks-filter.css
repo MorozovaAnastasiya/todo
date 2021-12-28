@@ -1,0 +1,25 @@
+.filters {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+.button-footer {
+  background-color: transparent;
+  border: none;
+  color: gray;
+  cursor: pointer;
+  font-size: inherit;
+}
+.filter-button {
+  display: inline-block;
+  margin: 3px;
+  padding: 3px 7px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+.filter-button:hover {
+  border-color: rgba(175, 47, 47, 0.2);
+}

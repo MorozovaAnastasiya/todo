@@ -1,0 +1,14 @@
+.new-task-form {
+  padding: 16px 16px 16px 60px;
+  border: none;
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  background: rgba(0, 0, 0, 0.003);
+  width: 100%;
+  font-size: 24px;
+  box-sizing: border-box;
+  line-height: 1.4em;
+}
+.new-task-form::-webkit-input-placeholder {
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.4);
+}

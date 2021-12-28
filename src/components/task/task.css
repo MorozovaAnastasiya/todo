@@ -1,0 +1,62 @@
+.check {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: absolute;
+}
+.check-custom {
+  position: absolute;
+  top: 9px;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  background-image: url('circle.svg');
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+.check:checked + .check-custom {
+  background-image: url('circle-checked.svg');
+}
+.item-text {
+  margin-left: 60px;
+}
+.view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 0;
+  line-height: 1.4em;
+}
+.label {
+  position: relative;
+  padding: 15px 85px 15px 0px;
+  display: block;
+  box-sizing: border-box;
+}
+.created {
+  font-size: 13px;
+  color: gray;
+  margin-right: 10px;
+}
+.button-group {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  background: transparent;
+  border: none;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+  cursor: pointer;
+}
+.icon:hover {
+  color: #af5b5e;
+}
+.icon-edit::after {
+  font-size: 19px;
+  content: '✎';
+}
+.icon-destroy::after {
+  font-size: 34px;
+  content: '×';
+}
