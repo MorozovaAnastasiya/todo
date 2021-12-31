@@ -3,10 +3,10 @@ import ReactDom from 'react-dom';
 import TasksFilter from './tasks-filter';
 import './footer.css';
 
-const Footer = () => {
+const Footer = ({ itemsLeft }) => {
   return (
     <footer className="footer">
-      <span className="todo-count">1 items left</span>
+      <span className="todo-count"> {itemsLeft} items left</span>
       <TasksFilter />
       <button className="button-footer clear-completed">Clear completed</button>
     </footer>

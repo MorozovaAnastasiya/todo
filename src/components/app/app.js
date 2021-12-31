@@ -9,13 +9,14 @@ import TaskList from '../task-list';
 import Footer from '../footer';
 
 const App = () => {
+  let idCount = 1;
   const [todos, setTodos] = React.useState([
-    { description: 'Completed task', completed: false, id: 1 },
-    { description: 'Editing task', completed: false, id: 2 },
-    { description: 'Active task', completed: false, id: 3 },
+    { description: 'Completed task', completed: false, id: idCount++ },
+    { description: 'Editing task', completed: false, id: idCount++ },
+    { description: 'Active task', completed: false, id: idCount++ },
   ]);
 
-  function ToggleTodo(id) {
+  const ToggleTodo = (id) => {
     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
@@ -24,18 +25,32 @@ const App = () => {
         return todo;
       })
     );
-  }
-  function removeTodo(id) {
+  };
+
+  const removeTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
-  }
+  };
+
+  const addTodo = (description) => {
+    setTodos(
+      todos.concat([
+        {
+          description,
+          id: idCount++,
+          completed: false,
+        },
+      ])
+    );
+  };
+  let itemsLeft = todos.filter((elem) => elem.completed === false).length;
   return (
-    <Context.Provider value={{removeTodo}}>
+    <Context.Provider value={{ removeTodo }}>
       <div className="app-wrapper">
         <Title />
         <section className="main">
-          <NewTaskForm />
+          <NewTaskForm onCreate={addTodo} />
           <TaskList todos={todos} onToggle={ToggleTodo} />
-          <Footer />
+          <Footer itemsLeft={itemsLeft} />
         </section>
       </div>
     </Context.Provider>
