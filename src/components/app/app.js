@@ -10,13 +10,28 @@ import Footer from '../footer';
 
 const App = () => {
   let idCount = 1;
-  const [todos, setTodos] = React.useState([
-    { description: 'Completed task', completed: false, id: idCount++ },
-    { description: 'Editing task', completed: false, id: idCount++ },
-    { description: 'Active task', completed: false, id: idCount++ },
-  ]);
+  const [{ todos, filterTodos }, setTodos] = React.useState({
+    todos: [
+      {
+        description: 'Completed task',
+        completed: false,
+        id: idCount++,
+      },
+      {
+        description: 'Editing task',
+        completed: false,
+        id: idCount++,
+      },
+      {
+        description: 'Active task',
+        completed: false,
+        id: idCount++,
+      },
+    ],
+    filterTodos: 'all', //all, active, completed
+  });
 
-  const ToggleTodo = (id) => {
+  const toggleTodo = (id) => {
     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
@@ -42,15 +57,47 @@ const App = () => {
       ])
     );
   };
-  let itemsLeft = todos.filter((elem) => elem.completed === false).length;
+
+  const showFilterItems = (items, filter) => {
+    switch (filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.completed);
+      case 'completed':
+        return items.filter((item) => item.completed);
+      default:
+        return items;
+    }
+  };
+
+  const onFilterChange = (filter) => {
+    setTodos((filterTodos = filter));
+  };
+
+  let itemsLeft = todos.filter((elem) => {
+    return elem.completed === false;
+  }).length;
+
+  const visibleItems = showFilterItems(todos, filterTodos);
+  
   return (
-    <Context.Provider value={{ removeTodo }}>
+    <Context.Provider
+      value={{
+        visibleItems,
+        toggleTodo,
+        removeTodo,
+        filterTodos,
+        onFilterChange,
+        itemsLeft,
+      }}
+    >
       <div className="app-wrapper">
         <Title />
         <section className="main">
           <NewTaskForm onCreate={addTodo} />
-          <TaskList todos={todos} onToggle={ToggleTodo} />
-          <Footer itemsLeft={itemsLeft} />
+          <TaskList />
+          <Footer />
         </section>
       </div>
     </Context.Provider>

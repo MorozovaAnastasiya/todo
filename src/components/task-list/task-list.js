@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDom from 'react-dom';
 import NewTaskForm from '../new-task-form';
 import Task from '../task';
 import './task-list.css';
+import Context from '../contex';
 
-const TaskList = (props) => {
-  const elements = props.todos.map((TodoItem) => {
+const TaskList = () => {
+  const { visibleItems, toggleTodo } = useContext(Context);
+  const elements = visibleItems.map((todoItem) => {
     return (
-      <li className="task-list-item" key={TodoItem.id}>
-        <Task todo={TodoItem} onChange={props.onToggle} />
+      <li className="task-list-item" key={todoItem.id}>
+        <Task todo={todoItem} />
       </li>
     );
   });

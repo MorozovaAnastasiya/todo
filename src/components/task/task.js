@@ -4,9 +4,10 @@ import ReactDom from 'react-dom';
 import './task.css';
 import Context from '../contex';
 
-const Task = ({ todo, onChange }) => {
-  const { removeTodo } = useContext(Context);
+const Task = ({ todo }) => {
+  const { removeTodo, toggleTodo } = useContext(Context);
   const classes = ['description', 'item-text'];
+
   if (todo.completed) {
     classes.push('done');
   }
@@ -17,7 +18,7 @@ const Task = ({ todo, onChange }) => {
           className="check"
           type="checkbox"
           checked={todo.completed}
-          onChange={() => onChange(todo.id)}
+          onChange={toggleTodo.bind(null, todo.id)}
         />
         <span className="check-custom"></span>
         <span className={classes.join(' ')}>{todo.description}</span>
