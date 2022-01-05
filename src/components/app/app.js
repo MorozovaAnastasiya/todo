@@ -9,11 +9,26 @@ import TaskList from '../task-list';
 import Footer from '../footer';
 
 const App = () => {
-  let idCount = 1;
+  const [todoId, setTodoId] = useState(4);
   const [todos, setTodos] = useState([
-    { description: 'Completed task', completed: false, id: idCount++ },
-    { description: 'Editing task', completed: false, id: idCount++ },
-    { description: 'Active task', completed: false, id: idCount++ },
+    {
+      description: 'Completed task',
+      timeToCreate: Date.now(),
+      completed: false,
+      id: 1,
+    },
+    {
+      description: 'Editing task',
+      timeToCreate: Date.now(),
+      completed: false,
+      id: 2,
+    },
+    {
+      description: 'Active task',
+      timeToCreate: Date.now(),
+      completed: false,
+      id: 3,
+    },
   ]);
   const [filterTodos, setFilterTodos] = useState(
     'all' //all, active, completed
@@ -35,12 +50,14 @@ const App = () => {
   };
 
   const addTodo = (description) => {
+    setTodoId(todoId + 1);
     setTodos(
       todos.concat([
         {
           description,
-          id: idCount++,
+          id: todoId,
           completed: false,
+          timeToCreate: Date.now(),
         },
       ])
     );
