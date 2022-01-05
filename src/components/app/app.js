@@ -66,6 +66,10 @@ const App = () => {
   let itemsLeft = todos.filter((elem) => elem.completed === false).length;
   const visibleItems = showFilterItems(todos, filterTodos);
 
+  const clearCompleted = () => {
+    setTodos(todos.filter((todo) => todo.completed === false));
+  };
+
   return (
     <Context.Provider
       value={{
@@ -75,6 +79,7 @@ const App = () => {
         toggleTodo,
         removeTodo,
         onFilterChange,
+        clearCompleted,
       }}
     >
       <div className="app-wrapper">

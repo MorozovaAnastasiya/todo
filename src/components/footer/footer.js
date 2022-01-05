@@ -5,12 +5,17 @@ import './footer.css';
 import Context from '../contex';
 
 const Footer = () => {
-  const { itemsLeft } = useContext(Context);
+  const { itemsLeft, clearCompleted } = useContext(Context);
   return (
     <footer className="footer">
       <span className="todo-count"> {itemsLeft} items left</span>
       <TasksFilter />
-      <button className="button-footer clear-completed">Clear completed</button>
+      <button
+        className="button-footer clear-completed"
+        onClick={clearCompleted}
+      >
+        Clear completed
+      </button>
     </footer>
   );
 };
