@@ -4,12 +4,13 @@ import './tasks-filter.css';
 import Context from '../contex';
 
 const TasksFilter = () => {
+  const { filterTodos, onFilterChange } = useContext(Context);
   const buttonsInfo = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
     { name: 'completed', label: 'Completed' },
   ];
-  const { filterTodos, onFilterChange } = useContext(Context);
+
   const buttonsRender = buttonsInfo.map(({ name, label }) => {
     const isActive = filterTodos === name;
     const buttonClass = isActive ? 'filter-button--active' : 'filter-button';
@@ -17,7 +18,7 @@ const TasksFilter = () => {
       <li key={name}>
         <button
           className={`button-footer ${buttonClass}`}
-          onClick={() => onFilterChange({ name })}
+          onClick={() => onFilterChange(name)}
         >
           {label}
         </button>

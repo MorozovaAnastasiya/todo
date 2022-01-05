@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDom from 'react-dom';
 
 import Context from '../contex';
@@ -10,26 +10,14 @@ import Footer from '../footer';
 
 const App = () => {
   let idCount = 1;
-  const [{ todos, filterTodos }, setTodos] = React.useState({
-    todos: [
-      {
-        description: 'Completed task',
-        completed: false,
-        id: idCount++,
-      },
-      {
-        description: 'Editing task',
-        completed: false,
-        id: idCount++,
-      },
-      {
-        description: 'Active task',
-        completed: false,
-        id: idCount++,
-      },
-    ],
-    filterTodos: 'all', //all, active, completed
-  });
+  const [todos, setTodos] = useState([
+    { description: 'Completed task', completed: false, id: idCount++ },
+    { description: 'Editing task', completed: false, id: idCount++ },
+    { description: 'Active task', completed: false, id: idCount++ },
+  ]);
+  const [filterTodos, setFilterTodos] = useState(
+    'all' //all, active, completed
+  );
 
   const toggleTodo = (id) => {
     setTodos(
@@ -72,24 +60,21 @@ const App = () => {
   };
 
   const onFilterChange = (filter) => {
-    setTodos((filterTodos = filter));
+    setFilterTodos(filter);
   };
 
-  let itemsLeft = todos.filter((elem) => {
-    return elem.completed === false;
-  }).length;
-
+  let itemsLeft = todos.filter((elem) => elem.completed === false).length;
   const visibleItems = showFilterItems(todos, filterTodos);
-  
+
   return (
     <Context.Provider
       value={{
         visibleItems,
+        filterTodos,
+        itemsLeft,
         toggleTodo,
         removeTodo,
-        filterTodos,
         onFilterChange,
-        itemsLeft,
       }}
     >
       <div className="app-wrapper">
