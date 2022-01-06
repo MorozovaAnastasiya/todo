@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDom from 'react-dom';
+import PropTypes from 'prop-types';
 
 import Context from '../contex';
 import './app.css';
@@ -109,6 +110,20 @@ const App = () => {
       </div>
     </Context.Provider>
   );
+};
+
+App.propTypes = {
+  todoId: PropTypes.number,
+  todos: PropTypes.arrayOf(PropTypes.object),
+  filterTodos: PropTypes.string,
+  toggleTodo: PropTypes.func,
+  removeTodo: PropTypes.func,
+  addTodo: PropTypes.func,
+  showFilterItems: PropTypes.func,
+  onFilterChange: PropTypes.func,
+  itemsLeft: PropTypes.number,
+  visibleItems: PropTypes.arrayOf(PropTypes.object),
+  clearCompleted: PropTypes.func,
 };
 
 export default App;

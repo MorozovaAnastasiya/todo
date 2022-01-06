@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDom from 'react-dom';
 import './new-task-form.css';
+import PropTypes from 'prop-types';
 
 const NewTaskForm = ({ onCreate }) => {
   const [value, setValue] = useState('');
@@ -26,5 +27,9 @@ const NewTaskForm = ({ onCreate }) => {
     </form>
   );
 };
-
+NewTaskForm.propTypes = {
+  onCreate: PropTypes.func,
+  value: PropTypes.string,
+  onSubmit: PropTypes.func,
+};
 export default NewTaskForm;
