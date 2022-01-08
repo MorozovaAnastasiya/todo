@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactDom from 'react-dom';
 import './new-task-form.css';
 import PropTypes from 'prop-types';
+import Context from '../contex';
 
-const NewTaskForm = ({ onCreate }) => {
+const NewTaskForm = () => {
   const [value, setValue] = useState('');
-
+  const { addTodo } = useContext;
   const onSubmit = (event) => {
     event.preventDefault();
     if (value.trim()) {
-      onCreate(value);
+      addTodo(value);
       setValue('');
     }
   };
@@ -28,7 +29,7 @@ const NewTaskForm = ({ onCreate }) => {
   );
 };
 NewTaskForm.propTypes = {
-  onCreate: PropTypes.func,
+  addTodo: PropTypes.func,
   value: PropTypes.string,
   onSubmit: PropTypes.func,
 };

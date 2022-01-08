@@ -98,12 +98,13 @@ const App = () => {
         removeTodo,
         onFilterChange,
         clearCompleted,
+        addTodo,
       }}
     >
       <div className="app-wrapper">
         <Title />
         <section className="main">
-          <NewTaskForm onCreate={addTodo} />
+          <NewTaskForm />
           <TaskList />
           <Footer />
         </section>
