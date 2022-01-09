@@ -16,18 +16,21 @@ const App = () => {
       description: 'Completed task',
       timeToCreate: Date.now(),
       completed: false,
+      edit: false,
       id: 1,
     },
     {
       description: 'Editing task',
       timeToCreate: Date.now(),
       completed: false,
+      edit: false,
       id: 2,
     },
     {
       description: 'Active task',
       timeToCreate: Date.now(),
       completed: false,
+      edit: false,
       id: 3,
     },
   ]);
@@ -58,6 +61,7 @@ const App = () => {
           description,
           id: todoId,
           completed: false,
+          edit: false,
           timeToCreate: Date.now(),
         },
       ])
@@ -92,6 +96,18 @@ const App = () => {
       todos.map((todo) => {
         if (todo.id === id) {
           todo.description = newDescription;
+          todo.edit = false;
+        }
+        return todo;
+      })
+    );
+  };
+
+  const openEditTask = (id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          todo.edit = true;
         }
         return todo;
       })
@@ -110,6 +126,7 @@ const App = () => {
         clearCompleted,
         addTodo,
         editDescription,
+        openEditTask,
       }}
     >
       <div className="app-wrapper">

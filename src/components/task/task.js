@@ -1,31 +1,44 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactDom from 'react-dom';
 import { formatDistanceToNow } from 'date-fns';
-
 import './task.css';
 import Context from '../contex';
 
 const Task = ({ todo }) => {
-  const { removeTodo, toggleTodo, editDescription } = useContext(Context);
-  const [spanClasses, setSpanClasses] = useState(['description', 'item-text']);
-  const [editClasses, setEditClasses] = useState(['editTodo', 'hidden']);
+  const { removeTodo, toggleTodo, editDescription, openEditTask } =
+    useContext(Context);
   const [taskValue, setTaskValue] = useState(todo.description);
-  const [checkCustomClasses, setCheckCustomClasses] = useState([
-    'check-custom',
-  ]);
+  const checkboxClasses = ['description', 'item-text'];
+  const timePassed = formatDistanceToNow(todo.timeToCreate);
 
   if (todo.completed) {
-    // setSpanClasses([...spanClasses, 'done']);
+    checkboxClasses.push('done');
   }
 
-  const timePassed = formatDistanceToNow(todo.timeToCreate);
+  let inputEditTask;
+  let taskDefault;
+  let checkbox;
+  if (todo.edit) {
+    inputEditTask = (
+      <input
+        className="editTodo"
+        type="text"
+        value={taskValue}
+        onChange={(event) => setTaskValue(event.target.value)}
+        onBlur={() => editTask()}
+      />
+    );
+  } else {
+    taskDefault = (
+      <span className={checkboxClasses.join(' ')}>{todo.description}</span>
+    );
+    checkbox = <span className="check-custom"></span>;
+  }
 
   const editTask = () => {
     editDescription(taskValue, todo.id);
-    setSpanClasses(['description', 'item-text']);
-    setEditClasses(['editTodo', 'hidden']);
-    setCheckCustomClasses(['check-custom']);
   };
+
   const onSubmit = (event) => {
     event.preventDefault();
     editTask();
@@ -41,27 +54,16 @@ const Task = ({ todo }) => {
             checked={todo.completed}
             onChange={toggleTodo.bind(null, todo.id)}
           />
-          <span className={checkCustomClasses.join(' ')}></span>
-          <span className={spanClasses.join(' ')}>{todo.description}</span>
-
-          <input
-            className={editClasses.join(' ')}
-            type="text"
-            value={taskValue}
-            onChange={(event) => setTaskValue(event.target.value)}
-            onBlur={() => editTask()}
-          />
+          {checkbox}
+          {taskDefault}
+          {inputEditTask}
         </label>
       </form>
       <div className="button-group">
         <span className="created">{timePassed}</span>
         <button
           className="icon icon-edit"
-          onClick={() => {
-            setSpanClasses([...spanClasses, 'hidden']);
-            setEditClasses(['editTodo']);
-            setCheckCustomClasses(['check-custom', 'hidden']);
-          }}
+          onClick={openEditTask.bind(null, todo.id)}
         ></button>
         <button
           className="icon icon-destroy"
