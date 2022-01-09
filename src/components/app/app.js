@@ -87,6 +87,16 @@ const App = () => {
   const clearCompleted = () => {
     setTodos(todos.filter((todo) => todo.completed === false));
   };
+  const editDescription = (newDescription, id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          todo.description = newDescription;
+        }
+        return todo;
+      })
+    );
+  };
 
   return (
     <Context.Provider
@@ -99,6 +109,7 @@ const App = () => {
         onFilterChange,
         clearCompleted,
         addTodo,
+        editDescription,
       }}
     >
       <div className="app-wrapper">

@@ -6,7 +6,8 @@ import Context from '../contex';
 
 const NewTaskForm = () => {
   const [value, setValue] = useState('');
-  const { addTodo } = useContext;
+  const { addTodo } = useContext(Context);
+
   const onSubmit = (event) => {
     event.preventDefault();
     if (value.trim()) {
@@ -28,9 +29,11 @@ const NewTaskForm = () => {
     </form>
   );
 };
+
 NewTaskForm.propTypes = {
   addTodo: PropTypes.func,
   value: PropTypes.string,
   onSubmit: PropTypes.func,
 };
+
 export default NewTaskForm;
