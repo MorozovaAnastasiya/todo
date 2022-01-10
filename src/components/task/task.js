@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
-import ReactDom from 'react-dom';
+import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
 import './task.css';
 import Context from '../contex';
 
-const Task = ({ todo }) => {
-  const { removeTodo, toggleTodo, editDescription, openEditTask } =
-    useContext(Context);
+function Task({ todo }) {
+  const { removeTodo, toggleTodo, editDescription, openEditTask } = useContext(Context);
   const [taskValue, setTaskValue] = useState(todo.description);
   const checkboxClasses = ['description', 'item-text'];
   const timePassed = formatDistanceToNow(todo.timeToCreate);
@@ -14,6 +13,14 @@ const Task = ({ todo }) => {
   if (todo.completed) {
     checkboxClasses.push('done');
   }
+
+  const editTask = () => {
+    editDescription(taskValue, todo.id);
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    editTask();
+  };
 
   let inputEditTask;
   let taskDefault;
@@ -29,49 +36,35 @@ const Task = ({ todo }) => {
       />
     );
   } else {
-    taskDefault = (
-      <span className={checkboxClasses.join(' ')}>{todo.description}</span>
-    );
-    checkbox = <span className="check-custom"></span>;
+    taskDefault = <span className={checkboxClasses.join(' ')}>{todo.description}</span>;
+    checkbox = <span className="check-custom" />;
   }
-
-  const editTask = () => {
-    editDescription(taskValue, todo.id);
-  };
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    editTask();
-  };
 
   return (
     <div className="view">
       <form className="taskForm" onSubmit={onSubmit}>
-        <label className="label">
-          <input
-            className="check"
-            type="checkbox"
-            checked={todo.completed}
-            onChange={toggleTodo.bind(null, todo.id)}
-          />
-          {checkbox}
-          {taskDefault}
-          {inputEditTask}
-        </label>
+        <input className="check" type="checkbox" checked={todo.completed} onChange={toggleTodo.bind(null, todo.id)} />
+        {checkbox}
+        {taskDefault}
+        {inputEditTask}
       </form>
       <div className="button-group">
         <span className="created">{timePassed}</span>
-        <button
-          className="icon icon-edit"
-          onClick={openEditTask.bind(null, todo.id)}
-        ></button>
-        <button
-          className="icon icon-destroy"
-          onClick={removeTodo.bind(null, todo.id)}
-        ></button>
+        <button className="icon icon-edit" type="button" onClick={openEditTask.bind(null, todo.id)} />
+        <button className="icon icon-destroy" type="button" onClick={removeTodo.bind(null, todo.id)} />
       </div>
     </div>
   );
+}
+
+Task.propTypes = {
+  todo: PropTypes.shape({
+    description: PropTypes.string,
+    timeToCreate: PropTypes.number,
+    completed: PropTypes.bool,
+    edit: PropTypes.bool,
+    id: PropTypes.number,
+  }).isRequired,
 };
 
 export default Task;

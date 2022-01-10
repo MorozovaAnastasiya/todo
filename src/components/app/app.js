@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import ReactDom from 'react-dom';
-import PropTypes from 'prop-types';
-
 import Context from '../contex';
 import './app.css';
 import Title from '../title';
@@ -9,8 +6,8 @@ import NewTaskForm from '../new-task-form';
 import TaskList from '../task-list';
 import Footer from '../footer';
 
-const App = () => {
-  var [todoId, setTodoId] = useState(4);
+function App() {
+  const [todoId, setTodoId] = useState(4);
   const [todos, setTodos] = useState([
     {
       description: 'Completed task',
@@ -35,12 +32,14 @@ const App = () => {
     },
   ]);
   const [filterTodos, setFilterTodos] = useState(
-    'all' //all, active, completed
+    'all' // all, active, completed
   );
 
   const toggleTodo = (id) => {
+    const newTodos = [...todos];
+    console.log(newTodos);
     setTodos(
-      todos.map((todo) => {
+      newTodos.map((todo) => {
         if (todo.id === id) {
           todo.completed = !todo.completed;
         }
@@ -48,7 +47,6 @@ const App = () => {
       })
     );
   };
-
   const removeTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
@@ -85,7 +83,7 @@ const App = () => {
     setFilterTodos(filter);
   };
 
-  let itemsLeft = todos.filter((elem) => elem.completed === false).length;
+  const itemsLeft = todos.filter((elem) => elem.completed === false).length;
   const visibleItems = showFilterItems(todos, filterTodos);
 
   const clearCompleted = () => {
@@ -139,20 +137,6 @@ const App = () => {
       </div>
     </Context.Provider>
   );
-};
-
-App.propTypes = {
-  todoId: PropTypes.number,
-  todos: PropTypes.arrayOf(PropTypes.object),
-  filterTodos: PropTypes.string,
-  toggleTodo: PropTypes.func,
-  removeTodo: PropTypes.func,
-  addTodo: PropTypes.func,
-  showFilterItems: PropTypes.func,
-  onFilterChange: PropTypes.func,
-  itemsLeft: PropTypes.number,
-  visibleItems: PropTypes.arrayOf(PropTypes.object),
-  clearCompleted: PropTypes.func,
-};
+}
 
 export default App;
