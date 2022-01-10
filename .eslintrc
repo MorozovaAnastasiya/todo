@@ -2,12 +2,9 @@
   "extends": ["airbnb", "airbnb/hooks", "eslint-config-prettier", "prettier/react"],
   "plugins": ["react"],
   "parser": "babel-eslint",
-  "parserOptions": {
-    "requireConfigFile": false,
-    "ecmaVersion": 8
-  },
   "env": {
     "browser": true,
+    "es6": true,
     "jest": true
   },
   "rules": {
