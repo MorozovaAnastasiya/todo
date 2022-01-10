@@ -10,7 +10,7 @@ import TaskList from '../task-list';
 import Footer from '../footer';
 
 const App = () => {
-  var [todoId, setTodoId] = useState(4);
+  const [todoId, setTodoId] = useState(4);
   const [todos, setTodos] = useState([
     {
       description: 'Completed task',
