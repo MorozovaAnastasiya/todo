@@ -35,11 +35,12 @@ function App() {
     'all' // all, active, completed
   );
 
+  const copy = JSON.parse(JSON.stringify(todos));
+  console.log(copy);
+
   const toggleTodo = (id) => {
-    const newTodos = [...todos];
-    console.log(newTodos);
     setTodos(
-      newTodos.map((todo) => {
+      todos.map((todo) => {
         if (todo.id === id) {
           todo.completed = !todo.completed;
         }
@@ -47,6 +48,7 @@ function App() {
       })
     );
   };
+
   const removeTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };

@@ -43,15 +43,22 @@ function Task({ todo }) {
   return (
     <div className="view">
       <form className="taskForm" onSubmit={onSubmit}>
-        <input className="check" type="checkbox" checked={todo.completed} onChange={toggleTodo.bind(null, todo.id)} />
-        {checkbox}
-        {taskDefault}
-        {inputEditTask}
+        <label>
+          <input className="check" type="checkbox" checked={todo.completed} onChange={toggleTodo.bind(null, todo.id)} />
+          {checkbox}
+          {taskDefault}
+          {inputEditTask}
+        </label>
       </form>
       <div className="button-group">
         <span className="created">{timePassed}</span>
-        <button className="icon icon-edit" type="button" onClick={openEditTask.bind(null, todo.id)} />
-        <button className="icon icon-destroy" type="button" onClick={removeTodo.bind(null, todo.id)} />
+        <button label="edit task" className="icon icon-edit" type="button" onClick={openEditTask.bind(null, todo.id)} />
+        <button
+          label="task delete"
+          className="icon icon-destroy"
+          type="button"
+          onClick={removeTodo.bind(null, todo.id)}
+        />
       </div>
     </div>
   );
