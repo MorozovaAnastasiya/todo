@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDom from 'react-dom';
 import './new-task-form.css';
 
 const NewTaskForm = ({ onCreate }) => {

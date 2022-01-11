@@ -1,14 +1,18 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-import NewTaskForm from '../new-task-form';
 import Task from '../task';
 import './task-list.css';
 
 const TaskList = (props) => {
+
   const elements = props.todos.map((TodoItem) => {
     return (
+      
       <li className="task-list-item" key={TodoItem.id}>
-        <Task todo={TodoItem} onChange={props.onToggle} />
+        <Task
+          todo={TodoItem}
+          onToggle={props.onToggle}
+          removeTodo={props.removeTodo}
+        />
       </li>
     );
   });

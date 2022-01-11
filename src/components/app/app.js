@@ -1,60 +1,70 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-
-import Context from '../contex';
+import React, { Component } from 'react';
 import './app.css';
 import Title from '../title';
 import NewTaskForm from '../new-task-form';
 import TaskList from '../task-list';
 import Footer from '../footer';
 
-const App = () => {
-  let idCount = 1;
-  const [todos, setTodos] = React.useState([
-    { description: 'Completed task', completed: false, id: idCount++ },
-    { description: 'Editing task', completed: false, id: idCount++ },
-    { description: 'Active task', completed: false, id: idCount++ },
-  ]);
+class App extends Component {
+  idCount = 1;
+  state = {
+    todoData: [
+      { description: 'Completed task', completed: false, id: this.idCount++ },
+      { description: 'Editing task', completed: false, id: this.idCount++ },
+      { description: 'Active task', completed: false, id: this.idCount++ },
+    ],
+  };
+  itemsLeft = this.state.todoData.filter((elem) => elem.completed === false)
+    .length;
 
-  const ToggleTodo = (id) => {
-    setTodos(
-      todos.map((todo) => {
+  ToggleTodo = (id) => {
+    this.setState(({ todoData }) => {
+      return todoData.map((todo) => {
         if (todo.id === id) {
-          todo.completed = !todo.completed;
+          todo.completed = !todo.completed; //нельзя потому что мы меняем существующий массив!
         }
         return todo;
-      })
-    );
+      });
+    });
   };
 
-  const removeTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  removeTodo = (id) => {
+    this.setState(({ todoData }) => {
+      const newArr = todoData.filter((todo) => todo.id !== id);
+      return { todoData: newArr };
+    });
   };
 
-  const addTodo = (description) => {
-    setTodos(
-      todos.concat([
+  addTodo = (description) => {
+    this.setState(({ todoData }) => {
+      const newArr = [
+        ...todoData,
         {
           description,
-          id: idCount++,
+          id: this.idCount++,
           completed: false,
         },
-      ])
-    );
+      ];
+      return { todoData: newArr };
+    });
   };
-  let itemsLeft = todos.filter((elem) => elem.completed === false).length;
-  return (
-    <Context.Provider value={{ removeTodo }}>
+
+  render() {
+    return (
       <div className="app-wrapper">
         <Title />
         <section className="main">
-          <NewTaskForm onCreate={addTodo} />
-          <TaskList todos={todos} onToggle={ToggleTodo} />
-          <Footer itemsLeft={itemsLeft} />
+          <NewTaskForm onCreate={this.addTodo} />
+          <TaskList
+            todos={this.state.todoData}
+            onToggle={this.ToggleTodo}
+            removeTodo={this.removeTodo}
+          />
+          <Footer itemsLeft={this.itemsLeft} />
         </section>
       </div>
-    </Context.Provider>
-  );
-};
+    );
+  }
+}
 
 export default App;

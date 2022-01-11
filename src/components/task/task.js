@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
-import ReactDom from 'react-dom';
-
+import React from 'react';
 import './task.css';
-import Context from '../contex';
 
-const Task = ({ todo, onChange }) => {
-  const { removeTodo } = useContext(Context);
+const Task = ({ todo, onToggle, removeTodo }) => {
   const classes = ['description', 'item-text'];
+
   if (todo.completed) {
     classes.push('done');
   }
+
   return (
     <div className="view">
       <label className="label">
@@ -17,7 +15,7 @@ const Task = ({ todo, onChange }) => {
           className="check"
           type="checkbox"
           checked={todo.completed}
-          onChange={() => onChange(todo.id)}
+          onChange={() => onToggle(todo.id)}
         />
         <span className="check-custom"></span>
         <span className={classes.join(' ')}>{todo.description}</span>
@@ -27,7 +25,7 @@ const Task = ({ todo, onChange }) => {
         <button className="icon icon-edit"></button>
         <button
           className="icon icon-destroy"
-          onClick={removeTodo.bind(null, todo.id)}
+          onClick={() => removeTodo(todo.id)}
         ></button>
       </div>
     </div>
