@@ -1,29 +1,55 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './new-task-form.css';
+import PropTypes from 'prop-types';
 
-const NewTaskForm = ({ onCreate }) => {
-  const [value, setValue] = useState('');
+class NewTaskForm extends Component {
+  static defaultProps = {
+    onTaskAdded: () => {},
+  };
 
-  const onSubmit = (event) => {
+  static propTypes = {
+    onTaskAdded: PropTypes.func,
+  };
+
+  state = {
+    value: '',
+  };
+
+  onSubmit = (event) => {
+    const { onTaskAdded } = this.props;
+    const { value } = this.state;
+
     event.preventDefault();
+
     if (value.trim()) {
-      onCreate(value);
-      setValue('');
+      onTaskAdded(value);
+      this.setState({
+        value: '',
+      });
     }
   };
 
-  return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        className="new-task-form"
-        placeholder="What needs to be done?"
-        autoFocus
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-      ></input>
-    </form>
-  );
-};
+  onTaskChange = (event) => {
+    this.setState({
+      value: event.target.value,
+    });
+  };
+
+  render() {
+    const { value } = this.state;
+
+    return (
+      <form onSubmit={this.onSubmit}>
+        <input
+          type="text"
+          className="new-task-form"
+          placeholder="What needs to be done?"
+          value={value}
+          onChange={this.onTaskChange}
+        />
+      </form>
+    );
+  }
+}
 
 export default NewTaskForm;
