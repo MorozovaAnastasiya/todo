@@ -10,9 +10,9 @@ class App extends Component {
 
   state = {
     todoData: [
-      { description: 'Completed task', completed: false, id: 1 },
-      { description: 'Editing task', completed: false, id: 2 },
-      { description: 'Active task', completed: false, id: 3 },
+      { description: 'Completed task', timeToCreate: Date.now(), completed: false, edit: false, id: 1 },
+      { description: 'Editing task', timeToCreate: Date.now(), completed: false, edit: false, id: 2 },
+      { description: 'Active task', timeToCreate: Date.now(), completed: false, edit: false, id: 3 },
     ],
     filterTasks: 'all',
   };
@@ -43,8 +43,10 @@ class App extends Component {
         ...todoData,
         {
           description,
-          id: this.todoId,
+          timeToCreate: Date.now(),
           completed: false,
+          edit: false,
+          id: this.todoId,
         },
       ];
       return { todoData: newTodoData };
@@ -78,6 +80,30 @@ class App extends Component {
     });
   };
 
+  openEditTask = (id) => {
+    this.setState(({ todoData }) => {
+      const newTodoData = todoData.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, edit: true };
+        }
+        return todo;
+      });
+      return { todoData: newTodoData };
+    });
+  };
+
+  editDescription = (newDescription, id) => {
+    this.setState(({ todoData }) => {
+      const newTodoData = todoData.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, description: newDescription };
+        }
+        return todo;
+      });
+      return { todoData: newTodoData };
+    });
+  };
+
   render() {
     const { todoData } = this.state;
     const { filterTasks } = this.state;
@@ -89,7 +115,13 @@ class App extends Component {
         <Title />
         <section className="main">
           <NewTaskForm onTaskAdded={this.addTodo} />
-          <TaskList todos={visibleItems} onToggle={this.ToggleTodo} removeTodo={this.removeTodo} />
+          <TaskList
+            todos={visibleItems}
+            onToggle={this.ToggleTodo}
+            removeTodo={this.removeTodo}
+            editDescription={this.editDescription}
+            openEditTask={this.openEditTask}
+          />
           <Footer
             onItemsLeft={itemsLeft}
             filter={filterTasks}

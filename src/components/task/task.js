@@ -1,35 +1,102 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import PropTypes from 'prop-types';
 import './task.css';
 
-const Task = ({ todo, onToggle, removeTodo }) => {
-  const classes = ['description', 'item-text'];
+class Task extends Component {
+  state = {
+    taskValue: '',
+  };
 
-  if (todo.completed) {
-    classes.push('done');
+  checkboxClasses = ['description', 'item-text'];
+
+  componentDidMount() {
+    const { todo } = this.props;
+    this.setState({ taskValue: todo.description });
   }
 
-  return (
-    <div className="view">
-      <label className="label">
+  editTask = () => {
+    const { todo, editDescription } = this.props;
+    const { taskValue } = this.state;
+    editDescription(taskValue, todo.id);
+  };
+
+  onSubmit = (event) => {
+    event.preventDefault();
+    this.editTask();
+  };
+
+  render() {
+    const { todo, onToggle, removeTodo, openEditTask } = this.props;
+    const timePassed = formatDistanceToNow(todo.timeToCreate);
+    const { taskValue } = this.state;
+
+    if (todo.completed) {
+      this.checkboxClasses.push('done');
+    }
+
+    let inputEditTask;
+    let taskDefault;
+    let checkbox;
+    if (todo.edit) {
+      inputEditTask = (
         <input
-          className="check"
-          type="checkbox"
-          checked={todo.completed}
-          onChange={() => onToggle(todo.id)}
+          className="editTodo"
+          type="text"
+          value={taskValue}
+          onChange={(event) => this.setState({ taskValue: event.target.value })}
+          onBlur={() => this.editTask()}
         />
-        <span className="check-custom"></span>
-        <span className={classes.join(' ')}>{todo.description}</span>
-      </label>
-      <div className="button-group">
-        <span className="created">created 17 seconds ago</span>
-        <button className="icon icon-edit"></button>
-        <button
-          className="icon icon-destroy"
-          onClick={() => removeTodo(todo.id)}
-        ></button>
+      );
+    } else {
+      taskDefault = <span className={this.checkboxClasses.join(' ')}>{todo.description}</span>;
+      checkbox = <span className="check-custom" />;
+    }
+
+    return (
+      <div className="view">
+        <form className="taskForm" onSubmit={this.onSubmit}>
+          <label>
+            <input
+              className="check"
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => {
+                onToggle(todo.id);
+              }}
+            />
+            {checkbox}
+            {taskDefault}
+            {inputEditTask}
+          </label>
+        </form>
+        <div className="button-group">
+          <span className="created">{timePassed}</span>
+          <button label="edit task" className="icon icon-edit" type="button" onClick={openEditTask} />
+          <button
+            label="task delete"
+            className="icon icon-destroy"
+            type="button"
+            onClick={removeTodo.bind(null, todo.id)}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
+
+Task.propTypes = {
+  todo: PropTypes.shape({
+    description: PropTypes.string,
+    timeToCreate: PropTypes.number,
+    completed: PropTypes.bool,
+    edit: PropTypes.bool,
+    id: PropTypes.number,
+  }).isRequired,
+  onToggle: PropTypes.func.isRequired,
+  removeTodo: PropTypes.func.isRequired,
+  editDescription: PropTypes.func.isRequired,
+  openEditTask: PropTypes.func.isRequired,
 };
 
 export default Task;
