@@ -14,6 +14,7 @@ class App extends Component {
       { description: 'Editing task', completed: false, id: 2 },
       { description: 'Active task', completed: false, id: 3 },
     ],
+    filterTasks: 'all',
   };
 
   ToggleTodo = (id) => {
@@ -50,17 +51,51 @@ class App extends Component {
     });
   };
 
+  showFilterTasks = (items, filter) => {
+    switch (filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.completed);
+      case 'completed':
+        return items.filter((item) => item.completed);
+      default:
+        return items;
+    }
+  };
+
+  filterChange = (filterName) => {
+    this.setState({ filterTasks: filterName });
+  };
+
+  clearCompleted = () => {
+    this.setState(({ todoData }) => {
+      const newTodoData = todoData.filter((elem) => !elem.completed);
+
+      return {
+        todoData: newTodoData,
+      };
+    });
+  };
+
   render() {
     const { todoData } = this.state;
+    const { filterTasks } = this.state;
     const itemsLeft = todoData.filter((elem) => elem.completed === false).length;
+    const visibleItems = this.showFilterTasks(todoData, filterTasks);
 
     return (
       <div className="app-wrapper">
         <Title />
         <section className="main">
           <NewTaskForm onTaskAdded={this.addTodo} />
-          <TaskList todos={todoData} onToggle={this.ToggleTodo} removeTodo={this.removeTodo} />
-          <Footer onItemsLeft={itemsLeft} />
+          <TaskList todos={visibleItems} onToggle={this.ToggleTodo} removeTodo={this.removeTodo} />
+          <Footer
+            onItemsLeft={itemsLeft}
+            filter={filterTasks}
+            filterChange={this.filterChange}
+            clearCompleted={this.clearCompleted}
+          />
         </section>
       </div>
     );

@@ -3,12 +3,9 @@ import './new-task-form.css';
 import PropTypes from 'prop-types';
 
 class NewTaskForm extends Component {
-  static defaultProps = {
-    onTaskAdded: () => {},
-  };
 
   static propTypes = {
-    onTaskAdded: PropTypes.func,
+    onTaskAdded: PropTypes.func.isRequired,
   };
 
   state = {
