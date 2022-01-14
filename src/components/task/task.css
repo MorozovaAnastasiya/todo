@@ -19,6 +19,7 @@
 }
 .item-text {
   margin-left: 60px;
+  cursor: pointer;
 }
 .view {
   display: flex;

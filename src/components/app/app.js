@@ -96,7 +96,7 @@ class App extends Component {
     this.setState(({ todoData }) => {
       const newTodoData = todoData.map((todo) => {
         if (todo.id === id) {
-          return { ...todo, description: newDescription };
+          return { ...todo, description: newDescription, edit: false };
         }
         return todo;
       });

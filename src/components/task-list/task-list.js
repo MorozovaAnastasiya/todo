@@ -9,7 +9,9 @@ function TaskList({ todos, onToggle, removeTodo, editDescription, openEditTask }
       <Task
         todo={TodoItem}
         onToggle={onToggle}
-        removeTodo={removeTodo}
+        removeTodo={() => {
+          removeTodo(TodoItem.id);
+        }}
         editDescription={editDescription}
         openEditTask={() => {
           openEditTask(TodoItem.id);

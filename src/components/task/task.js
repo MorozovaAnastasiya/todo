@@ -33,6 +33,8 @@ class Task extends Component {
 
     if (todo.completed) {
       this.checkboxClasses.push('done');
+    } else if (!todo.completed && this.checkboxClasses.includes('done')) {
+      this.checkboxClasses.pop();
     }
 
     let inputEditTask;
@@ -73,12 +75,7 @@ class Task extends Component {
         <div className="button-group">
           <span className="created">{timePassed}</span>
           <button label="edit task" className="icon icon-edit" type="button" onClick={openEditTask} />
-          <button
-            label="task delete"
-            className="icon icon-destroy"
-            type="button"
-            onClick={removeTodo.bind(null, todo.id)}
-          />
+          <button label="task delete" className="icon icon-destroy" type="button" onClick={removeTodo} />
         </div>
       </div>
     );
