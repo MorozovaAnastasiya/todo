@@ -44,7 +44,6 @@ class Task extends Component {
       inputEditTask = (
         <input
           className="editTodo"
-          autoFocus // eslint-disable-line
           type="text"
           value={taskValue}
           onChange={(event) => this.setState({ taskValue: event.target.value })}
