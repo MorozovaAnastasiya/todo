@@ -40,7 +40,7 @@ class Task extends Component {
     let inputEditTask;
     let taskDefault;
     let checkbox;
-    if (todo.edit) {
+    if (todo.edit && !todo.completed) {
       inputEditTask = (
         <input
           className="editTodo"
