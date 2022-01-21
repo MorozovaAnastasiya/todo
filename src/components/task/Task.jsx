@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
-import './task.css';
+import './Task.css';
 
 class Task extends Component {
   state = {
     taskValue: '',
   };
-
-  checkboxClasses = ['description', 'item-text'];
 
   componentDidMount() {
     const { todo } = this.props;
@@ -27,15 +26,12 @@ class Task extends Component {
   };
 
   render() {
-    const { todo, onToggle, removeTodo, openEditTask } = this.props;
+    const { todo, toggleTodo, removeTodo, openEditTask } = this.props;
     const timePassed = formatDistanceToNow(todo.timeToCreate);
     const { taskValue } = this.state;
-
-    if (todo.completed) {
-      this.checkboxClasses.push('done');
-    } else if (!todo.completed && this.checkboxClasses.includes('done')) {
-      this.checkboxClasses.pop();
-    }
+    const checkboxClasses = cn('description', 'item-text', {
+      done: todo.completed,
+    });
 
     let inputEditTask;
     let taskDefault;
@@ -52,7 +48,7 @@ class Task extends Component {
         />
       );
     } else {
-      taskDefault = <span className={this.checkboxClasses.join(' ')}>{todo.description}</span>;
+      taskDefault = <span className={checkboxClasses}>{todo.description}</span>;
       checkbox = <span className="check-custom" />;
     }
 
@@ -65,7 +61,7 @@ class Task extends Component {
               type="checkbox"
               checked={todo.completed}
               onChange={() => {
-                onToggle(todo.id);
+                toggleTodo(todo.id);
               }}
             />
             {checkbox}
@@ -91,7 +87,7 @@ Task.propTypes = {
     edit: PropTypes.bool,
     id: PropTypes.number,
   }).isRequired,
-  onToggle: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired,
   removeTodo: PropTypes.func.isRequired,
   editDescription: PropTypes.func.isRequired,
   openEditTask: PropTypes.func.isRequired,

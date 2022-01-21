@@ -1,31 +1,27 @@
 import React, { Component } from 'react';
-import './new-task-form.css';
+import './NewTaskForm.css';
 import PropTypes from 'prop-types';
 
 class NewTaskForm extends Component {
-  static propTypes = {
-    onTaskAdded: PropTypes.func.isRequired,
-  };
-
   state = {
     value: '',
   };
 
   onSubmit = (event) => {
-    const { onTaskAdded } = this.props;
+    const { addTodo } = this.props;
     const { value } = this.state;
 
     event.preventDefault();
 
     if (value.trim()) {
-      onTaskAdded(value);
+      addTodo(value);
       this.setState({
         value: '',
       });
     }
   };
 
-  onTaskChange = (event) => {
+  taskChange = (event) => {
     this.setState({
       value: event.target.value,
     });
@@ -41,11 +37,15 @@ class NewTaskForm extends Component {
           className="new-task-form"
           placeholder="What needs to be done?"
           value={value}
-          onChange={this.onTaskChange}
+          onChange={this.taskChange}
         />
       </form>
     );
   }
 }
+
+NewTaskForm.propTypes = {
+  addTodo: PropTypes.func.isRequired,
+};
 
 export default NewTaskForm;

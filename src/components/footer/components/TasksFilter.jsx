@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './tasks-filter.css';
+import cn from 'classnames';
+import './TasksFilter.css';
 
 class TasksFilter extends Component {
-  static defaultProps = {
-    filter: 'all',
-    filterChange: () => {},
-  };
-
-  static propTypes = {
-    filter: PropTypes.string,
-    filterChange: PropTypes.func,
-  };
-
   buttonsInfo = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -29,13 +20,16 @@ class TasksFilter extends Component {
 
     const buttonsRender = this.buttonsInfo.map(({ name, label }) => {
       const isActive = filter === name;
-      const buttonClass = isActive ? 'filter-button--active' : 'filter-button';
+      const buttonClass = cn('button-footer', {
+        'filter-button--active': isActive,
+        'filter-button': !isActive,
+      });
 
       return (
         <li key={name}>
           <button
             type="button"
-            className={`button-footer ${buttonClass}`}
+            className={buttonClass}
             onClick={() => {
               this.onFilterChange(name);
             }}
@@ -48,5 +42,15 @@ class TasksFilter extends Component {
     return <ul className="filters">{buttonsRender}</ul>;
   }
 }
+
+TasksFilter.defaultProps = {
+  filter: 'all',
+  filterChange: () => {},
+};
+
+TasksFilter.propTypes = {
+  filter: PropTypes.string,
+  filterChange: PropTypes.func,
+};
 
 export default TasksFilter;

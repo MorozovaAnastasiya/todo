@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './app.css';
-import Title from '../title';
-import NewTaskForm from '../new-task-form';
-import TaskList from '../task-list';
-import Footer from '../footer';
+import './App.css';
+import Title from '../Title';
+import NewTaskForm from '../NewTaskForm';
+import TaskList from '../TaskList';
+import Footer from '../Footer';
 
 class App extends Component {
   todoId = 3;
@@ -17,7 +17,7 @@ class App extends Component {
     filterTasks: 'all',
   };
 
-  ToggleTodo = (id) => {
+  toggleTodo = (id) => {
     this.setState(({ todoData }) => {
       const newTodoData = todoData.map((todo) => {
         if (todo.id === id) {
@@ -114,16 +114,16 @@ class App extends Component {
       <div className="app-wrapper">
         <Title />
         <section className="main">
-          <NewTaskForm onTaskAdded={this.addTodo} />
+          <NewTaskForm addTodo={this.addTodo} />
           <TaskList
             todos={visibleItems}
-            onToggle={this.ToggleTodo}
+            toggleTodo={this.toggleTodo}
             removeTodo={this.removeTodo}
             editDescription={this.editDescription}
             openEditTask={this.openEditTask}
           />
           <Footer
-            onItemsLeft={itemsLeft}
+            itemsLeft={itemsLeft}
             filter={filterTasks}
             filterChange={this.filterChange}
             clearCompleted={this.clearCompleted}
