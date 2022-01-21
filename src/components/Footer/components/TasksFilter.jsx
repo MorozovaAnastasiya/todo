@@ -25,7 +25,7 @@ class TasksFilter extends Component {
         'filter-button': !isActive,
       });
 
-      return (
+      return (n
         <li key={name}>
           <button
             type="button"
