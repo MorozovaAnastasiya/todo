@@ -13,16 +13,11 @@ const Footer = ({ itemsLeft, filter, filterChange, clearCompleted }) => (
   </footer>
 );
 
-Footer.defaultProps = {
-  filterChange: () => {},
-  clearCompleted: () => {},
-};
-
 Footer.propTypes = {
   itemsLeft: PropTypes.number.isRequired,
   filter: PropTypes.string.isRequired,
-  filterChange: PropTypes.func,
-  clearCompleted: PropTypes.func,
+  filterChange: PropTypes.func.isRequired,
+  clearCompleted: PropTypes.func.isRequired,
 };
 
 export default Footer;
