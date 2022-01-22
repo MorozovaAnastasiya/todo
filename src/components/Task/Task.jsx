@@ -25,8 +25,15 @@ class Task extends Component {
     this.editTask();
   };
 
+  isEditTask = () => {
+    const { todo, openEditTask } = this.props;
+    if (!todo.completed) {
+      openEditTask(todo.id);
+    }
+  };
+
   render() {
-    const { todo, toggleTodo, removeTodo, openEditTask } = this.props;
+    const { todo, toggleTodo, removeTodo } = this.props;
     const timePassed = formatDistanceToNow(todo.timeToCreate);
     const { taskValue } = this.state;
     const checkboxClasses = cn('description', 'item-text', {
@@ -71,7 +78,7 @@ class Task extends Component {
         </form>
         <div className="button-group">
           <span className="created">{timePassed}</span>
-          <button label="edit task" className="icon icon-edit" type="button" onClick={openEditTask} />
+          <button label="edit task" className="icon icon-edit" type="button" onClick={this.isEditTask} />
           <button label="task delete" className="icon icon-destroy" type="button" onClick={removeTodo} />
         </div>
       </div>
