@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { Title } from '../Title/Title';
+import { NewTaskForm } from '../NewTaskForm/NewTaskForm';
+import { TaskList } from '../TaskList/TaskList';
+import { Footer } from '../Footer/Footer';
 import './App.css';
-import Title from '../Title';
-import NewTaskForm from '../NewTaskForm';
-import TaskList from '../TaskList';
-import Footer from '../Footer';
 
-class App extends Component {
+export class App extends Component {
   todoId = 3;
 
   state = {
@@ -133,5 +133,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

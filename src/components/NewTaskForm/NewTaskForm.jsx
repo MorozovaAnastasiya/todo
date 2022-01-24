@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './NewTaskForm.css';
 import PropTypes from 'prop-types';
 
-class NewTaskForm extends Component {
+
+export class NewTaskForm extends Component {
   state = {
     value: '',
   };
@@ -47,5 +48,3 @@ class NewTaskForm extends Component {
 NewTaskForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
 };
-
-export default NewTaskForm;

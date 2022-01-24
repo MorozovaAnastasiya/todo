@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import './TasksFilter.css';
 
-class TasksFilter extends Component {
+export class TasksFilter extends Component {
   buttonsInfo = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -47,5 +47,3 @@ TasksFilter.propTypes = {
   filter: PropTypes.string.isRequired,
   filterChange: PropTypes.func.isRequired,
 };
-
-export default TasksFilter;

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Task from '../Task';
+import { Task } from '../Task/Task';
 import './TaskList.css';
 
-const TaskList = ({ todos, toggleTodo, removeTodo, editDescription, openEditTask }) => {
-  
+export const TaskList = ({ todos, toggleTodo, removeTodo, editDescription, openEditTask }) => {
   const elements = todos.map((todoItem) => (
     <li className="task-list-item" key={todoItem.id}>
       <Task
@@ -22,7 +21,7 @@ const TaskList = ({ todos, toggleTodo, removeTodo, editDescription, openEditTask
   ));
 
   return <ul className="task-list">{elements}</ul>;
-}
+};
 
 TaskList.propTypes = {
   todos: PropTypes.shape({
@@ -38,5 +37,3 @@ TaskList.propTypes = {
   editDescription: PropTypes.func.isRequired,
   openEditTask: PropTypes.func.isRequired,
 };
-
-export default TaskList;

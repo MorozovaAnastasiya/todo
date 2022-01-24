@@ -4,7 +4,7 @@ import cn from 'classnames';
 import PropTypes from 'prop-types';
 import './Task.css';
 
-class Task extends Component {
+export class Task extends Component {
   state = {
     taskValue: '',
   };
@@ -99,5 +99,3 @@ Task.propTypes = {
   editDescription: PropTypes.func.isRequired,
   openEditTask: PropTypes.func.isRequired,
 };
-
-export default Task;
